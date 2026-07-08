@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Restaurant LE TRIO | Suka na Elengi - Kinshasa</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "trio-red": "#6b0f1a", 
+                        "trio-gold": "#d4af37", 
+                        "trio-dark": "#0a0a0a",
+                        "trio-gray": "#1a1a1a",
+                        "trio-light": "#f4ede4",
+                    },
+                    fontFamily: {
+                        sans: ["Montserrat", "sans-serif"],
+                        serif: ["Playfair Display", "serif"],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0a0a0a; color: #f4ede4; overflow-x: hidden; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #6b0f1a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; background: #0a0a0a; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .logo-pulse { animation: pulseLogo 2s infinite; }
+        @keyframes pulseLogo {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .loaded #preloader { opacity: 0; visibility: hidden; }
+
+        /* Animations Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .scale-reveal { opacity: 0; transform: scale(0.9); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .scale-reveal.active { opacity: 1; transform: scale(1); }
+
+        /* Menu Image Hover Effect (UNIQUEMENT SUR ORDINATEUR) */
+        @media (min-width: 1024px) {
+            .menu-row { transition: all 0.3s ease; border-left: 3px solid transparent; }
+            .menu-row:hover { border-left: 3px solid #d4af37; padding-left: 1.5rem; background: linear-gradient(90deg, rgba(107,15,26,0.2) 0%, transparent 100%); }
+            .menu-row:hover h3 { color: #d4af37; }
+        }
+
+        /* Bouton Magnétique */
+        .magnetic-btn { position: relative; display: inline-flex; justify-content: center; align-items: center; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn-inner { pointer-events: none; }
+
+        /* Effet d'image mask */
+        .img-overlay::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, #0a0a0a 0%, transparent 50%, #0a0a0a 100%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-trio-red selection:text-white">
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="w-32 h-32 rounded-full border-4 border-trio-gold flex items-center justify-center logo-pulse bg-trio-red">
+            <span class="font-serif text-3xl font-bold text-trio-gold tracking-wider">TRIO</span>
+        </div>
+        <div class="mt-8 w-48 h-1 bg-trio-gray rounded overflow-hidden">
+            <div class="h-full bg-trio-gold w-0 animate-[loading_1.5s_ease-in-out_forwards]"></div>
+        </div>
+    </div>
+    <style>@keyframes loading { to { width: 100%; } }</style>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-4 px-6 md:px-12 border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="hidden md:flex space-x-8 w-1/3">
+                <a href="#ambiance" class="text-xs tracking-widest uppercase hover:text-trio-gold transition-colors font-semibold">Ambiance</a>
+                <a href="#menu" class="text-xs tracking-widest uppercase hover:text-trio-gold transition-colors font-semibold">La Carte</a>
+            </div>
+            <!-- LOGO CENTRAL -->
+            <a href="#accueil" class="w-1/3 flex justify-center group">
+                <div class="text-center">
+                    <h1 class="font-serif text-3xl md:text-4xl text-trio-gold font-bold tracking-widest group-hover:scale-105 transition-transform">LE TRIO</h1>
+                    <span class="text-[9px] tracking-[0.3em] text-white uppercase opacity-70">Restaurant</span>
+                </div>
+            </a>
+            <div class="hidden md:flex justify-end space-x-8 w-1/3 items-center">
+                <a href="#contact" class="text-xs tracking-widest uppercase hover:text-trio-gold transition-colors font-semibold">Contact</a>
+                <a href="#contact" class="bg-trio-red text-white border border-trio-gold/50 px-6 py-2 text-xs tracking-widest uppercase hover:bg-trio-gold hover:text-black transition-all">Réserver</a>
+            </div>
+            <!-- Burger Mobile -->
+            <button class="md:hidden text-trio-gold w-1/3 flex justify-end" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-trio-dark/95 backdrop-blur-xl z-[45] pt-32 px-8">
+        <div class="flex flex-col space-y-8 text-center">
+            <a href="#ambiance" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-serif text-3xl text-white">Ambiance</a>
+            <a href="#menu" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-serif text-3xl text-white">La Carte</a>
+            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="font-serif text-3xl text-white">Contact & Réservation</a>
+        </div>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+<section id="accueil" class="relative h-[40vh] min-h-[600px] w-full overflow-hidden flex items-center justify-center pt-16">
+    <div class="absolute inset-0 img-overlay">
+        <!-- Image de fond -->
+        <img class="w-full h-full object-cover opacity-50" src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Ambiance">
+    </div>
+    
+    <div class="relative z-10 text-center flex flex-col items-center px-4 w-full max-w-5xl">
+        <span class="bg-trio-red text-white text-xs px-4 py-1 rounded-full tracking-widest uppercase mb-6 reveal">Suka na Elengi</span>
+        <!-- J'ai aussi légèrement réduit la taille du texte pour que ça s'adapte mieux à la nouvelle hauteur -->
+        <h2 class="font-serif text-4xl md:text-6xl lg:text-[5rem] leading-none mb-6 reveal drop-shadow-2xl">
+            L'Épicentre du Goût <br><span class="text-trio-gold italic">à Kinshasa</span>
+        </h2>
+        <p class="font-sans text-sm md:text-base text-gray-300 max-w-2xl mx-auto mb-8 reveal">
+            Délice, Raffinement et Explosion de goûts. Découvrez nos plateaux grillades, nos poissons braisés et nos spécialités dans un cadre VIP.
+        </p>
+        
+        <div class="reveal magnetic-btn" id="magnet-btn">
+            <a href="#menu" class="btn-inner bg-trio-gold text-black font-bold px-8 py-4 text-sm tracking-widest uppercase rounded-sm shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+                Découvrir le Menu
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- 2. AMBIANCE -->
+    <section id="ambiance" class="py-24 bg-trio-gray relative">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8 reveal">
+                <h3 class="text-trio-gold tracking-[0.2em] text-xs uppercase font-bold">Notre Espace</h3>
+                <h2 class="font-serif text-4xl md:text-5xl text-white leading-tight">Convivialité & <br>Salons Privés</h2>
+                <p class="text-gray-400 leading-relaxed text-sm md:text-base">
+                    Que ce soit pour un moment de détente au bar, un repas en famille dans notre salle colorée, ou une réunion en toute discrétion dans notre <strong class="text-white">Salon Privé</strong>, LE TRIO vous offre un cadre adapté à toutes vos envies.
+                </p>
+                <div class="flex gap-6 pt-4">
+                    <div class="text-center">
+                        <span class="block font-serif text-3xl text-trio-gold mb-1">100%</span>
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Frais</span>
+                    </div>
+                    <div class="w-px bg-white/10"></div>
+                    <div class="text-center">
+                        <span class="block font-serif text-3xl text-trio-gold mb-1">VIP</span>
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Espace</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 scale-reveal">
+                <img src="image/BAR.jpeg" alt="Le Bar" class="w-full h-64 object-cover rounded-tl-3xl">
+                <img src="image/SALON1.jpeg" alt="Plats" class="w-full h-64 object-cover rounded-br-3xl mt-8">
+                <img src="image/BAR2.jpeg">
+                <img src="image/SALON2.jpeg" alt="Plats" class="w-full h-64 object-cover rounded-br-3xl mt-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. LA CARTE (Version Responsive Premium) -->
+    <section id="menu" class="py-32 bg-trio-dark px-6 md:px-12 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-[600px] h-[600px] bg-trio-red/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 lg:mb-20 reveal">
+                <span class="bg-trio-gold/10 text-trio-gold text-xs px-4 py-1 rounded-full tracking-widest uppercase mb-4 inline-block">Today's Best Deal</span>
+                <h2 class="font-serif text-5xl md:text-6xl text-white">Nos Spécialités</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Liste du Menu -->
+                <div class="lg:col-span-5 flex flex-col justify-center space-y-6 lg:space-y-2 reveal">
+                    
+                    <!-- Ligne 1 : Trio Fiesta -->
+                    <div class="menu-row py-4 lg:p-6 cursor-pointer group border-b border-white/10 lg:border-none" data-img="https://i.pinimg.com/1200x/68/a2/37/68a237749f7d8e6c661b7182ad7be326.jpg">
+                        <!-- Image Visible UNIQUEMENT sur Mobile -->
+                        <div class="lg:hidden w-full h-[220px] rounded-2xl overflow-hidden mb-5 relative shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                            <img src="https://i.pinimg.com/1200x/68/a2/37/68a237749f7d8e6c661b7182ad7be326.jpg" alt="Trio Fiesta" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="flex justify-between items-start lg:items-center mb-2 gap-4">
+                            <h3 class="font-serif text-2xl font-bold text-white transition-colors">Trio Fiesta</h3>
+                            <span class="font-bold text-sm lg:text-lg bg-white text-black px-3 py-1 rounded whitespace-nowrap mt-1 lg:mt-0">30 000 FC</span>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">Poulet braisé, frites, fromage + Canette sucrée au choix.</p>
+                    </div>
+
+                    <!-- Ligne 2 : Chawarma -->
+                    <div class="menu-row py-4 lg:p-6 cursor-pointer group border-b border-white/10 lg:border-none" data-img="https://i.pinimg.com/736x/59/eb/f3/59ebf38d583cbdc81024d1cbff040e4c.jpg">
+                        <!-- Image Visible UNIQUEMENT sur Mobile -->
+                        <div class="lg:hidden w-full h-[220px] rounded-2xl overflow-hidden mb-5 relative shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                            <img src="https://i.pinimg.com/736x/59/eb/f3/59ebf38d583cbdc81024d1cbff040e4c.jpg" alt="Chawarma" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="flex justify-between items-start lg:items-center mb-2 gap-4">
+                            <h3 class="font-serif text-2xl font-bold text-white transition-colors">Chawarma</h3>
+                            <span class="font-bold text-sm lg:text-lg bg-white text-black px-3 py-1 rounded whitespace-nowrap mt-1 lg:mt-0">12 500 FC</span>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">Wrap généreux à la viande + Canette sucrée offerte.</p>
+                    </div>
+
+                    <!-- Ligne 3 : Plateau Grillades -->
+                    <div class="menu-row py-4 lg:p-6 cursor-pointer group border-b border-white/10 lg:border-none" data-img="https://i.pinimg.com/736x/68/bf/df/68bfdf06d7dc74b9a1b5bb636cf67886.jpg">
+                        <!-- Image Visible UNIQUEMENT sur Mobile -->
+                        <div class="lg:hidden w-full h-[220px] rounded-2xl overflow-hidden mb-5 relative shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                            <img src="https://i.pinimg.com/736x/68/bf/df/68bfdf06d7dc74b9a1b5bb636cf67886.jpg" alt="Grillades" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="flex justify-between items-start lg:items-center mb-2 gap-4">
+                            <h3 class="font-serif text-2xl font-bold text-white transition-colors">Grand Plateau Mixte</h3>
+                            <span class="font-bold text-sm text-trio-gold mt-1 lg:mt-0 whitespace-nowrap">Sur Commande</span>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">Assortiment XXL de viandes grillées, frites, bananes plantains, brochettes.</p>
+                    </div>
+
+                    <!-- Ligne 4 : Poisson Braisé -->
+                    <div class="menu-row py-4 lg:p-6 cursor-pointer group border-b border-white/10 lg:border-none" data-img="https://i.pinimg.com/736x/31/db/89/31db897a142b7dd76fea480ffa0c3517.jpg">
+                        <!-- Image Visible UNIQUEMENT sur Mobile -->
+                        <div class="lg:hidden w-full h-[220px] rounded-2xl overflow-hidden mb-5 relative shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                            <img src="https://i.pinimg.com/736x/31/db/89/31db897a142b7dd76fea480ffa0c3517.jpg" alt="Poisson" class="w-full h-full object-cover">
+                        </div>
+
+                        <div class="flex justify-between items-start lg:items-center mb-2 gap-4">
+                            <h3 class="font-serif text-2xl font-bold text-white transition-colors">Poisson Braisé Entier</h3>
+                            <span class="font-bold text-sm text-trio-gold mt-1 lg:mt-0 whitespace-nowrap">Selon Poids</span>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">Poisson frais braisé aux épices locales, servi avec chikwangue et oignons.</p>
+                    </div>
+
+                </div>
+
+                <!-- Image Showcase (UNIQUEMENT SUR ORDINATEUR) -->
+                <div class="hidden lg:block lg:col-span-7 relative scale-reveal">
+                    <div class="sticky top-24 w-full h-[600px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                        <!-- Image par défaut (Le poulet / Trio Fiesta) -->
+                        <img id="menu-preview-img" class="w-full h-full object-cover transition-all duration-500" src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Plat LE TRIO">
+                        
+                        <!-- Badge Prix Promo flottant -->
+                        <div class="absolute bottom-8 right-8 bg-trio-red text-white p-4 rounded-full shadow-lg border-2 border-trio-gold animate-bounce">
+                            <span class="block text-[10px] font-bold text-center">PRIX YA BIEN</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CONTACT, MAP & RÉSERVATION -->
+    <section id="contact" class="py-24 bg-trio-gray relative border-t border-trio-red/20">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-0 shadow-2xl rounded-2xl overflow-hidden reveal">
+            
+            <!-- Formulaire & Infos -->
+            <div class="bg-trio-dark p-8 md:p-16 border-r border-white/5 relative">
+                <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                    <span class="material-symbols-outlined text-[300px]">restaurant</span>
+                </div>
+
+                <h2 class="font-serif text-4xl text-trio-gold mb-8">Nous Trouver</h2>
+                
+                <div class="space-y-6 mb-12 relative z-10">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-trio-red/20 p-3 rounded-full text-trio-red"><span class="material-symbols-outlined">location_on</span></div>
+                        <div>
+                            <p class="font-bold text-white mb-1 uppercase tracking-wider text-sm">Adresse</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">17A, avenue Tangu, Basoko/GB,<br>Ngaliema, Réf/Camp américain,<br>Kinshasa, RDC</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="bg-trio-red/20 p-3 rounded-full text-trio-red"><span class="material-symbols-outlined">call</span></div>
+                        <div>
+                            <p class="font-bold text-white mb-1 uppercase tracking-wider text-sm">Contacts / Delivery</p>
+                            <a href="tel:+243854115659" class="block text-trio-gold text-xl font-bold hover:text-white transition-colors">+243 85 41 15 659</a>
+                            <a href="tel:+243808806100" class="block text-trio-gold text-xl font-bold hover:text-white transition-colors">+243 808 806 100</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-white/10 mb-8 relative z-10">
+
+                <h3 class="font-bold text-white mb-4 uppercase tracking-wider text-sm relative z-10">Réserver ou Privatiser</h3>
+                <form class="space-y-4 relative z-10">
+                    <input type="text" placeholder="Nom complet" class="w-full bg-trio-gray border border-white/10 rounded px-4 py-3 text-white focus:outline-none focus:border-trio-gold">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="date" class="w-full bg-trio-gray border border-white/10 rounded px-4 py-3 text-gray-400 focus:outline-none focus:border-trio-gold">
+                        <select class="w-full bg-trio-gray border border-white/10 rounded px-4 py-3 text-gray-400 focus:outline-none focus:border-trio-gold">
+                            <option>Personnes</option>
+                            <option>2 personnes</option>
+                            <option>4 personnes</option>
+                            <option>Groupe (Salon Privé)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-trio-red text-white font-bold tracking-widest uppercase py-4 rounded hover:bg-trio-gold hover:text-black transition-colors mt-2">
+                        Envoyer la demande
+                    </button>
+                </form>
+            </div>
+
+            <!-- Carte Google Map (Design dark pour Kinshasa) -->
+<div class="relative h-[400px] lg:h-auto min-h-[500px] w-full overflow-hidden rounded-lg">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.3698188164317!2d15.3117466!3d-4.321857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a319bf3b50d8d%3A0x18a60c33b1bbf9e9!2sRestaurant%20LE%20TRIO!5e0!3m2!1sfr!2scd!4v1710000000000!5m2!1sfr!2scd"
+        class="w-full h-full absolute inset-0 border-0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    
+    <!-- Marqueur personnalisé superposé (Optionnel si la carte est bien centrée) -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none flex flex-col items-center">
+        <div class="bg-trio-red text-white text-[10px] font-bold px-3 py-1 rounded shadow-xl mb-1 border border-trio-gold">LE TRIO</div>
+        <div class="w-4 h-4 bg-trio-gold rounded-full relative shadow-[0_0_15px_#d4af37]">
+            <div class="absolute inset-0 bg-trio-gold rounded-full animate-ping opacity-75"></div>
+        </div>
+    </div>
+</div>
+            
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-trio-dark py-12 border-t border-white/5 text-center px-6">
+        <h2 class="font-serif text-3xl text-trio-gold mb-6">Restaurant LE TRIO</h2>
+        <div class="flex justify-center space-x-6 mb-8">
+            <a href="#" class="w-10 h-10 rounded-full bg-trio-gray flex items-center justify-center text-white hover:bg-trio-gold hover:text-black transition-colors"><span class="material-symbols-outlined">camera_alt</span></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-trio-gray flex items-center justify-center text-white hover:bg-trio-gold hover:text-black transition-colors"><span class="material-symbols-outlined">public</span></a>
+        </div>
+        <p class="text-xs text-gray-500 uppercase tracking-widest leading-loose">
+            17A, avenue Tangu, Basoko/GB, Ngaliema, Kinshasa, RDC<br>
+            © 2024 LE TRIO. Tous droits réservés.
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. PRELOADER
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 1500);
+
+            // 2. NAVBAR SCROLL EFFECT
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-trio-dark/95', 'backdrop-blur-md', 'border-white/10');
+                    navbar.classList.remove('border-white/5', 'py-4');
+                    navbar.classList.add('py-2');
+                } else {
+                    navbar.classList.remove('bg-trio-dark/95', 'backdrop-blur-md', 'border-white/10', 'py-2');
+                    navbar.classList.add('border-white/5', 'py-4');
+                }
+            });
+
+            // 3. MENU IMAGE HOVER EFFECT (Seulement si l'image preview existe - c-a-d sur ordinateur)
+            const menuRows = document.querySelectorAll('.menu-row');
+            const previewImg = document.getElementById('menu-preview-img');
+
+            if(previewImg) {
+                menuRows.forEach(row => {
+                    row.addEventListener('mouseenter', function() {
+                        const newSrc = this.getAttribute('data-img');
+                        if(previewImg.src !== newSrc) {
+                            previewImg.style.opacity = 0.3; 
+                            previewImg.style.transform = "scale(0.95)";
+                            setTimeout(() => {
+                                previewImg.src = newSrc;
+                                previewImg.style.opacity = 1; 
+                                previewImg.style.transform = "scale(1)";
+                            }, 200);
+                        }
+                    });
+                });
+            }
+
+            // 4. BOUTON MAGNÉTIQUE (Ordinateur)
+            const magnetBtn = document.getElementById('magnet-btn');
+            if(magnetBtn && window.innerWidth > 1024) {
+                magnetBtn.addEventListener('mousemove', (e) => {
+                    const rect = magnetBtn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    magnetBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+                magnetBtn.addEventListener('mouseleave', () => {
+                    magnetBtn.style.transform = `translate(0px, 0px)`;
+                });
+            }
+
+            // 5. SCROLL REVEAL ANIMATION
+            const revealElements = document.querySelectorAll('.reveal, .scale-reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
