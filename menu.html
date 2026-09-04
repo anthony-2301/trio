@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>La Carte Complète | Restaurant LE TRIO</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "trio-red": "#A31621", "trio-gold": "#D4AF37", "trio-bg": "#0A0A0A", "trio-card": "#141414" },
+                    fontFamily: { sans: ["Montserrat", "sans-serif"], serif: ["Playfair Display", "serif"] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0A0A0A; color: #F9F6F0; }
+        .menu-leader { flex-grow: 1; border-bottom: 1px dotted rgba(212, 175, 55, 0.3); margin: 0 12px; position: relative; top: -6px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVBAR SIMPLE -->
+    <nav class="w-full bg-[#0A0A0A] border-b border-white/5 py-4 px-6 z-50 sticky top-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-trio-gold transition-colors text-xs font-bold uppercase tracking-widest">
+                <span class="material-symbols-outlined">arrow_back</span> Retour
+            </a>
+            <img src="image-logo.jpg" alt="Logo Le Trio" class="h-8 object-contain" onerror="this.style.display='none'">
+            <div class="w-20"></div> <!-- Spacer -->
+        </div>
+    </nav>
+
+    <!-- ENTÊTE -->
+    <header class="py-12 text-center bg-trio-card border-b border-white/5">
+        <h1 class="font-serif text-3xl sm:text-5xl text-trio-gold mb-4">La Carte du Restaurant</h1>
+        <p class="text-xs text-gray-400 uppercase tracking-[0.2em]">Découvrez toutes nos saveurs</p>
+    </header>
+
+    <!-- CONTENU DU MENU -->
+    <div class="max-w-5xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+        
+        <!-- COLONNE 1 -->
+        <div class="space-y-12">
+            
+            <!-- PETIT DEJEUNER -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">I. Petit Déjeuner</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Déjeuner complet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Déjeuner simplet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">15.000 FC</span></li>
+                </ul>
+            </div>
+
+            <!-- CUISSON DES OEUFS -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">II. Cuisson des Oeufs</h2>
+                <p class="text-xs text-gray-400 mb-4 px-2 italic">Sur demande : Nature, Sardine, Jambon, Fromage, Baveuse, Sur le plat.</p>
+            </div>
+
+            <!-- SALADES -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">III. Salades</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade mixte</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade d'avocat</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Oeuf à la ruse</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Tomate farcis</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade macédoine</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Oeuf MIMOZA</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">15.000 FC</span></li>
+                </ul>
+            </div>
+
+            <!-- NOS PLATS -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">IV. Nos Plats</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Filet de capitaine</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">65.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Assiette de dorade</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">32.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Sol menière</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">58.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Côte de porc grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Côte à l'os grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">55.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Steack grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Crevette à l'ail</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">50.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet basquèse</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet KFC</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet pané</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">30.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet sauce champignons</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Brochette de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Blanquette poisson</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">75.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poisson salé 3 légumes</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Ngolo moseka trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">52.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Mutu ya ntaba</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COLONNE 2 -->
+        <div class="space-y-12">
+            
+            <!-- SNACKS & PIZZAS -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">VII. Snacks & Pizzas</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Hamburger</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Samoussa (5 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Boulette viande (6 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Ailes de poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Takos</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Chawarma viande</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">13.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Chawarma poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">11.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Assiette mixte</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">80.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza marguerita</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza jardin</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">50.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">57.000 FC</span></li>
+                </ul>
+            </div>
+
+            <!-- BARBECUE & PAPILLOTTES -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">VIII & IX. Grillades</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet braisé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet mayo</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Ntaba (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">65.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Ngulu (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">60.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Dindon (2 boules)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm mt-6 pt-4 border-t border-white/10"><span class="text-gray-200">Papillottes (Mopongo, Mboto...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">52.000 FC</span></li>
+                </ul>
+            </div>
+
+            <!-- LÉGUMES & ACCOMPAGNEMENTS -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">Accompagnements</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Légumes (Ndunda, Pondu...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">12.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Portions (Frites, Banane, Riz...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">12.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Riz simple</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">10.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Chikwangue / Fufu</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">4.000 FC</span></li>
+                </ul>
+            </div>
+
+            <!-- PATES -->
+            <div>
+                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">XI. Pâtes</h2>
+                <ul class="space-y-4 px-2">
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Spaguette bolognaise</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Pâtes carbonara</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
+                    <li class="flex items-end text-sm"><span class="text-gray-200">Spaguette nature</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">30.000 FC</span></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    
+    <footer class="text-center py-8 text-xs text-gray-500 border-t border-white/5 mt-12">
+        © 2024 Restaurant LE TRIO. Tous droits réservés.
+    </footer>
+</body>
+</html>
