@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>Restaurant LE TRIO | Gastronomie & Divertissement - Kinshasa</title>
+    <title>Restaurant LE TRIO | Gastronomie & Divertissement VIP - Kinshasa</title>
+    
+    <!-- Pré-connexion pour charger les polices et icônes BEAUCOUP plus vite -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
@@ -14,10 +18,10 @@
             theme: {
                 extend: {
                     colors: {
-                        "trio-red": "#A31621", /* Rouge accentué mais utilisé avec parcimonie */
-                        "trio-gold": "#D4AF37", /* Or élégant */
-                        "trio-bg": "#0A0A0A", /* Fond principal : Noir/Gris très profond et neutre */
-                        "trio-card": "#141414", /* Cartes gris foncé, sans dominante rouge */
+                        "trio-red": "#A31621",
+                        "trio-gold": "#D4AF37",
+                        "trio-bg": "#070707", /* Noir luxe Mutuk */
+                        "trio-card": "#121212", /* Gris très profond */
                     },
                     fontFamily: {
                         sans: ["Montserrat", "sans-serif"],
@@ -31,39 +35,45 @@
     </script>
 
     <style>
-        body { background-color: #0A0A0A; color: #F9F6F0; overflow-x: hidden; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0A0A0A; }
-        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+        body { background-color: #070707; color: #F9F6F0; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #070707; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; }
         
-        #preloader { position: fixed; inset: 0; background: #0A0A0A; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease-out; }
+        /* === PRELOADER INTELLIGENT === */
+        #preloader { position: fixed; inset: 0; background: #070707; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease-out; }
         .logo-pulse { animation: pulseLogo 2s infinite; }
-        @keyframes pulseLogo { 0%, 100% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)); } }
+        @keyframes pulseLogo { 0%, 100% { transform: scale(0.95); filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.7)); } }
         .loaded #preloader { opacity: 0; pointer-events: none; }
         
-        .loading-bar { height: 2px; background: #D4AF37; width: 0%; animation: loading 1.5s ease-out forwards; margin-top: 30px; }
-        @keyframes loading { to { width: 150px; } }
+        /* Jauge de progression qui s'adapte au chargement réel */
+        .loading-bar-container { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 30px; overflow: hidden; border-radius: 2px; }
+        .loading-bar { height: 100%; background: #D4AF37; width: 0%; animation: fakeProgress 10s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .loaded .loading-bar { animation: finishProgress 0.5s ease-out forwards; }
+        @keyframes fakeProgress { 0% { width: 0%; } 100% { width: 90%; } }
+        @keyframes finishProgress { 0% { width: 90%; } 100% { width: 100%; } }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        /* Animations d'apparition */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         
-        /* Gradient très subtil et neutre sur les images */
-        .img-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #0A0A0A 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.6) 100%); }
-        .menu-leader { flex-grow: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.2); margin: 0 12px; position: relative; top: -6px; }
+        .img-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #070707 0%, rgba(7,7,7,0.4) 50%, rgba(7,7,7,0.7) 100%); }
+        .card-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #070707 0%, transparent 80%); }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="antialiased selection:bg-trio-gold selection:text-trio-bg">
 
-    <!-- PRELOADER -->
+    <!-- 1. PRELOADER -->
     <div id="preloader">
-        <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border border-trio-gold/30 flex items-center justify-center logo-pulse bg-trio-gray/50 backdrop-blur-sm">
-            <span class="font-serif text-xl sm:text-3xl font-bold text-trio-gold tracking-[0.2em] ml-1 sm:ml-2">TRIO</span>
+        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-trio-gold/30 flex items-center justify-center logo-pulse bg-black/50 backdrop-blur-md shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+            <span class="font-serif text-lg sm:text-2xl font-bold text-trio-gold tracking-[0.2em] uppercase text-center ml-1">LE TRIO</span>
         </div>
-        <div class="loading-bar-container w-[150px] sm:w-[200px]">
+        <div class="loading-bar-container">
             <div class="loading-bar"></div>
         </div>
     </div>
+
     <!-- 2. NAVBAR -->
     <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-4 sm:py-6 px-4 lg:px-12 bg-transparent border-b border-transparent">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -71,8 +81,8 @@
             <!-- Liens PC Gauche -->
             <div class="hidden md:flex space-x-8 w-1/3 justify-start">
                 <a href="#plats" class="text-[11px] tracking-[0.15em] uppercase hover:text-trio-gold transition-colors font-medium">Plats</a>
-                <a href="#boissons" class="text-[11px] tracking-[0.15em] uppercase hover:text-trio-gold transition-colors font-medium">Boissons</a>
                 <a href="#services" class="text-[11px] tracking-[0.15em] uppercase hover:text-trio-gold transition-colors font-medium">Loisirs</a>
+                <a href="menu.html" class="text-[11px] tracking-[0.15em] uppercase hover:text-trio-gold transition-colors font-medium">Le Menu</a>
             </div>
 
             <!-- Logo central (Navbar) -->
@@ -103,12 +113,13 @@
         </button>
         <div class="flex flex-col space-y-8 text-center w-full">
             <a href="menu.html" class="font-serif text-2xl text-white hover:text-trio-gold border-b border-white/10 pb-4">Voir la Carte Complète</a>
+            <a href="#plats" onclick="document.getElementById('mobile-menu').classList.add('opacity-0', 'pointer-events-none')" class="font-serif text-2xl text-white hover:text-trio-gold border-b border-white/10 pb-4">Spécialités</a>
             <a href="#services" onclick="document.getElementById('mobile-menu').classList.add('opacity-0', 'pointer-events-none')" class="font-serif text-2xl text-white hover:text-trio-gold border-b border-white/10 pb-4">Chicha, Karaoké & VIP</a>
             <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('opacity-0', 'pointer-events-none')" class="font-sans text-xs tracking-[0.2em] font-bold text-trio-gold uppercase mt-4">Nous Contacter</a>
         </div>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- 3. HERO SECTION -->
     <section id="accueil" class="relative h-[85vh] min-h-[500px] w-full overflow-hidden flex items-center justify-center">
         <!-- Glow discret or -->
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-trio-gold/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
@@ -121,16 +132,22 @@
             <h2 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 reveal font-bold text-white drop-shadow-xl">
                 Mangez, Buvez, <br class="hidden sm:block"><span class="text-trio-gold italic font-normal">Amusez-vous.</span>
             </h2>
-            <p class="font-sans text-xs sm:text-sm text-gray-300 max-w-lg mx-auto mb-10 reveal font-light leading-relaxed">
+            <p class="font-sans text-xs sm:text-sm text-gray-300 max-w-lg mx-auto mb-8 reveal font-light leading-relaxed">
                 Le lieu incontournable à Kinshasa. Gastronomie raffinée, cocktails, espace Chicha, billard et salon VIP.
             </p>
-            <div class="reveal">
-                <a href="menu.html" class="bg-trio-gold text-trio-bg font-bold px-8 py-3.5 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase hover:bg-white transition-colors rounded-sm inline-block shadow-[0_0_15px_rgba(212,175,55,0.3)]">Découvrir le Menu</a>
+            
+
+            <!-- Flèche indicative de défilement JUSTE EN DESSOUS DU BOUTON -->
+            <div class="reveal mt-8 flex flex-col items-center animate-bounce">
+                <a href="#plats" class="text-trio-gold flex flex-col items-center bg-black/60 px-5 py-2.5 rounded-full backdrop-blur-md border border-trio-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:bg-black/80 transition-colors" aria-label="Scroller vers le bas">
+                    <span class="text-[8px] sm:text-[9px] uppercase tracking-[0.2em] mb-1 font-bold">Glisser vers le bas</span>
+                    <span class="material-symbols-outlined text-lg sm:text-xl">expand_more</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- APERÇU MENU (Nuances Neutres/Gris avec bouton vers menu.html) -->
+    <!-- 4. APERÇU MENU (AVEC LAZY LOADING) -->
     <section id="plats" class="py-16 sm:py-24 bg-trio-bg px-4 sm:px-6 md:px-12 relative z-20">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 sm:mb-20 reveal">
@@ -139,58 +156,58 @@
                 <p class="text-gray-300 mt-4 sm:mt-6 text-xs sm:text-sm max-w-md mx-auto font-light px-4">Laissez-vous tenter par nos recettes locales et nos grillades savoureuses.</p>
             </div>
 
-           <div class="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-8 lg:gap-12">
-    <!-- Plat 1 -->
-    <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group">
-        <div class="w-full aspect-[16/10] overflow-hidden relative">
-            <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-red text-white text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-white/10">Déjeuner</span>
-            <img src="https://i.pinimg.com/736x/8c/cf/9a/8ccf9ab3037ff50278160ec7c17f57b1.jpg" alt="Petit-déjeuner complet" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-        </div>
-        <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
-            <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Petit-Déjeuner Classique</h3>
-            <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Pain baguette croustillant servi avec du beurre, de la confiture, du lait et du sucre. Le départ parfait pour votre journée.</p>
-        </div>
-    </div>
+            <div class="grid grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-8 lg:gap-12">
+                <!-- Plat 1 -->
+                <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group">
+                    <div class="w-full aspect-[16/10] overflow-hidden relative">
+                        <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-red text-white text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-white/10">Déjeuner</span>
+                        <img src="https://i.pinimg.com/736x/8c/cf/9a/8ccf9ab3037ff50278160ec7c17f57b1.jpg" alt="Petit-déjeuner complet" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
+                        <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Petit-Déjeuner Classique</h3>
+                        <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Pain baguette croustillant servi avec du beurre, de la confiture, du lait et du sucre. Le départ parfait pour votre journée.</p>
+                    </div>
+                </div>
 
-    <!-- Plat 2 -->
-    <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group" style="transition-delay: 100ms;">
-        <div class="w-full aspect-[16/10] overflow-hidden relative">
-            <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-gold text-trio-bg text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-trio-gold">Snack</span>
-            <img src="https://i.pinimg.com/1200x/2a/7b/13/2a7b130698e4904a75d2791ae0a66cad.jpg" alt="Hamburger maison" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-        </div>
-        <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
-            <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Hamburger Gourmand</h3>
-            <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Un délicieux hamburger juteux avec steak pur bœuf, fromage fondu et garnitures fraîches dans un pain brioché.</p>
-        </div>
-    </div>
+                <!-- Plat 2 -->
+                <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group" style="transition-delay: 100ms;">
+                    <div class="w-full aspect-[16/10] overflow-hidden relative">
+                        <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-gold text-trio-bg text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-trio-gold">Snack</span>
+                        <img src="https://i.pinimg.com/1200x/2a/7b/13/2a7b130698e4904a75d2791ae0a66cad.jpg" alt="Hamburger maison" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
+                        <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Hamburger Gourmand</h3>
+                        <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Un délicieux hamburger juteux avec steak pur bœuf, fromage fondu et garnitures fraîches dans un pain brioché.</p>
+                    </div>
+                </div>
 
-    <!-- Plat 3 -->
-    <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group">
-        <div class="w-full aspect-[16/10] overflow-hidden relative">
-            <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-red text-white text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-white/10">Cuisson des œufs</span>
-            <img src="https://i.pinimg.com/1200x/4a/73/9a/4a739a03d67b96970bc9667f76004f51.jpg" alt="Omelette au jambon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1510693206972-df098062cb71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-        </div>
-        <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
-            <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Omelette au Jambon</h3>
-            <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Omelette baveuse ou bien cuite selon votre préférence, généreusement garnie de dés de jambon savoureux.</p>
-        </div>
-    </div>
+                <!-- Plat 3 -->
+                <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group">
+                    <div class="w-full aspect-[16/10] overflow-hidden relative">
+                        <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-red text-white text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-white/10">Cuisson des œufs</span>
+                        <img src="https://i.pinimg.com/1200x/4a/73/9a/4a739a03d67b96970bc9667f76004f51.jpg" alt="Omelette au jambon" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1510693206972-df098062cb71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
+                        <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Omelette au Jambon</h3>
+                        <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Omelette baveuse ou bien cuite selon votre préférence, généreusement garnie de dés de jambon savoureux.</p>
+                    </div>
+                </div>
 
-    <!-- Plat 4 -->
-    <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group" style="transition-delay: 100ms;">
-        <div class="w-full aspect-[16/10] overflow-hidden relative">
-            <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-gold text-trio-bg text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-trio-gold">Nos pâtes</span>
-            <img src="https://i.pinimg.com/1200x/b2/5a/35/b25a353183d877799557768dbda46bdd.jpg" alt="Spaghetti bolognaise" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1621996346565-e3d5d6281335?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-        </div>
-        <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
-            <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Spaghetti Bolognaise</h3>
-            <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Spaghettis al dente nappés d'une riche sauce bolognaise maison à la viande hachée, tomates et herbes aromatiques.</p>
-        </div>
-    </div>
-</div>
+                <!-- Plat 4 -->
+                <div class="bg-trio-card rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col hover:-translate-y-2 transition-all duration-500 reveal group" style="transition-delay: 100ms;">
+                    <div class="w-full aspect-[16/10] overflow-hidden relative">
+                        <span class="absolute top-2 left-2 sm:top-4 sm:left-4 bg-trio-gold text-trio-bg text-[7px] sm:text-[9px] font-bold px-2 py-0.5 sm:px-3 sm:py-1 uppercase tracking-wider rounded-sm z-10 shadow-lg border border-trio-gold">Nos pâtes</span>
+                        <img src="https://i.pinimg.com/1200x/b2/5a/35/b25a353183d877799557768dbda46bdd.jpg" alt="Spaghetti bolognaise" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" onerror="this.src='https://images.unsplash.com/photo-1621996346565-e3d5d6281335?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    </div>
+                    <div class="p-3 sm:p-6 lg:p-8 flex flex-col flex-grow">
+                        <h3 class="font-serif text-sm sm:text-xl lg:text-2xl font-bold text-trio-gold mb-1 sm:mb-3 leading-tight">Spaghetti Bolognaise</h3>
+                        <p class="text-[9px] sm:text-sm text-gray-300 font-light leading-snug sm:leading-relaxed line-clamp-3 sm:line-clamp-none">Spaghettis al dente nappés d'une riche sauce bolognaise maison à la viande hachée, tomates et herbes aromatiques.</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Bouton vers menu.html -->
-            <div class="text-center reveal">
+            <div class="text-center reveal mt-12">
                 <a href="menu.html" class="inline-flex items-center gap-2 border border-trio-gold text-trio-gold px-8 py-3 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] hover:bg-trio-gold hover:text-black transition-all rounded-sm">
                     Voir Toute La Carte <span class="material-symbols-outlined text-sm">arrow_forward</span>
                 </a>
@@ -198,7 +215,7 @@
         </div>
     </section>
 
-    <!-- SERVICES & LOISIRS (4 Éléments dont Chicha) -->
+    <!-- 5. SERVICES & LOISIRS -->
     <section id="services" class="py-16 sm:py-24 bg-[#111111] relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
             <div class="text-center mb-12 sm:mb-16 reveal flex flex-col items-center">
@@ -207,11 +224,10 @@
                 <div class="w-12 h-[2px] bg-trio-red"></div>
             </div>
 
-            <!-- Grille 2 colonnes Mobile, 4 colonnes PC -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 <!-- Karaoké -->
                 <div class="bg-trio-card rounded-xl overflow-hidden shadow-lg border border-white/5 reveal group relative aspect-[3/4]">
-                    <img src="https://i.pinimg.com/1200x/b5/96/b5/b596b5b467d270434d086f37a3fb2b25.jpg" alt="Karaoké" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90" onerror="this.src='https://images.unsplash.com/photo-1516280440502-990714246816?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
+                    <img src="https://i.pinimg.com/1200x/b5/96/b5/b596b5b467d270434d086f37a3fb2b25.jpg" alt="Karaoké" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90" onerror="this.src='https://images.unsplash.com/photo-1516280440502-990714246816?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6">
                         <span class="text-trio-red text-[8px] font-bold uppercase tracking-wider mb-1 block">Samedi 15H</span>
@@ -220,7 +236,7 @@
                 </div>
                 <!-- Billard -->
                 <div class="bg-trio-card rounded-xl overflow-hidden shadow-lg border border-white/5 reveal group relative aspect-[3/4]" style="transition-delay: 100ms;">
-                    <img src="https://i.pinimg.com/1200x/59/54/60/595460abb77083fd9237bc0719abf3f5.jpg" alt="Billard" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
+                    <img src="https://i.pinimg.com/1200x/59/54/60/595460abb77083fd9237bc0719abf3f5.jpg" alt="Billard" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6">
                         <span class="text-trio-gold text-[8px] font-bold uppercase tracking-wider mb-1 block">Détente</span>
@@ -229,7 +245,7 @@
                 </div>
                 <!-- CHICHA -->
                 <div class="bg-trio-card rounded-xl overflow-hidden shadow-lg border border-white/5 reveal group relative aspect-[3/4]" style="transition-delay: 200ms;">
-                    <img src="https://i.pinimg.com/736x/77/b1/c0/77b1c0772f52d0f031b131d60907e937.jpg" alt="Chicha Lounge" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
+                    <img src="https://i.pinimg.com/736x/77/b1/c0/77b1c0772f52d0f031b131d60907e937.jpg" alt="Chicha Lounge" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6">
                         <span class="text-blue-400 text-[8px] font-bold uppercase tracking-wider mb-1 block">Lounge</span>
@@ -238,7 +254,7 @@
                 </div>
                 <!-- Salon Privé -->
                 <div class="bg-trio-card rounded-xl overflow-hidden shadow-lg border border-white/5 reveal group relative aspect-[3/4]" style="transition-delay: 300ms;">
-                    <img src="image/SALON2.jpeg" alt="Salon VIP" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
+                    <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Salon VIP" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div class="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6">
                         <span class="text-trio-gold border border-trio-gold/50 text-[7px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider mb-2 inline-block">Sur Réservation</span>
@@ -249,7 +265,7 @@
         </div>
     </section>
 
-    <!-- CONTACT & MAP -->
+    <!-- 6. CONTACT & MAP -->
     <section id="contact" class="py-16 sm:py-24 bg-trio-bg relative border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-xl overflow-hidden reveal shadow-2xl">
             <!-- Formulaire -->
@@ -269,22 +285,24 @@
                         <div class="bg-trio-red/20 p-2 sm:p-3 rounded-full text-trio-gold border border-trio-red/30"><span class="material-symbols-outlined text-xl sm:text-2xl">call</span></div>
                         <div>
                             <p class="font-bold text-white mb-1 sm:mb-2 uppercase text-[9px] sm:text-[10px] tracking-widest text-trio-gold">Contacts</p>
-                            <a href="tel:+243854115659" class="block text-white text-base sm:text-lg font-light hover:text-trio-gold transition-colors">+243 85 41 15 659</a>
-                            <a href="tel:+243830282944" class="block text-white text-base sm:text-lg font-light hover:text-trio-gold transition-colors mt-0.5 sm:mt-1">+243 83 02 82 944</a>
+                            <a href="tel:0808806100" class="block text-white text-base sm:text-lg font-light hover:text-trio-gold transition-colors">0808806100</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-3 sm:space-y-4">
+                <div class="space-y-4 mt-6">
                     <input type="text" id="res-nom" placeholder="Votre Nom complet" class="w-full bg-[#1A0C0D] border border-white/10 rounded-sm px-4 py-3 sm:px-5 sm:py-4 text-xs sm:text-sm text-white focus:outline-none focus:border-trio-gold focus:bg-[#200f10] transition-colors font-light">
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <input type="date" id="res-date" class="w-full bg-[#1A0C0D] border border-white/10 rounded-sm px-4 py-3 sm:px-5 sm:py-4 text-xs sm:text-sm text-gray-400 focus:outline-none focus:border-trio-gold focus:bg-[#200f10] transition-colors font-light">
                         <select id="res-type" class="w-full bg-[#1A0C0D] border border-white/10 rounded-sm px-4 py-3 sm:px-5 sm:py-4 text-xs sm:text-sm text-gray-400 focus:outline-none focus:border-trio-gold focus:bg-[#200f10] transition-colors font-light appearance-none">
                             <option value="Table Restaurant">Table (Restaurant)</option>
-                            <option value="Salon Privé">Salon Privé VIP</option>
+                            <option value="Salon Privé VIP">Salon Privé VIP</option>
+                            <option value="Espace Chicha">Espace Chicha</option>
                             <option value="Soirée Karaoké">Soirée Karaoké</option>
                         </select>
                     </div>
+                    
                     <button onclick="reserverWhatsApp()" class="w-full bg-gradient-to-r from-trio-red to-[#5a0c15] text-white font-bold tracking-[0.2em] uppercase text-[10px] sm:text-[11px] py-4 sm:py-5 rounded-sm hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] border border-transparent hover:border-trio-gold transition-all mt-2">
                         Réserver via WhatsApp
                     </button>
@@ -293,28 +311,28 @@
 
             <!-- Map Gris/Noir -->
             <div class="relative h-[300px] lg:h-auto bg-[#1a1a1a]">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.4352459210436!2d15.276658074080343!3d-4.329065595644933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a319bf3b50d8d%3A0x18a60c33b1bb89e9!2sRestaurant%20LE%20TRIO!5e0!3m2!1sfr!2scd!4v1788543964690!5m2!1sfr!2scd" 
-                width="600" height="450" style="border:0;" allowfullscreen=""
-                loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15913.740982802117!2d15.261208713054671!3d-4.329065637596474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a319bf3b50d8d%3A0x18a60c33b1bb89e9!
+                2sRestaurant%20LE%20TRIO!5e0!3m2!1sen!2scd!4v1788969205663!5m2!1sen!2scd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" 
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#0a0405] py-10 sm:py-16 border-t border-trio-red/20 text-center px-6 flex flex-col items-center">
-        <img src="image-logo.jpg" alt="Logo Le Trio" class="h-16 sm:h-20 object-contain mb-6 drop-shadow-[0_0_15px_rgba(212,175,55,0.2)]" onerror="this.src='https://via.placeholder.com/200x80.png?text=LE+TRIO'">
-        <p class="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-[0.2em] leading-loose max-w-md">
-            Gastronomie • Karaoké • Billard • Salons VIP<br>
-            17A Av. Tangu, Ngaliema, Kinshasa<br><br>
-            <span class="text-trio-gold">© 2024 Restaurant LE TRIO.</span> Tous droits réservés.
-        </p>
-    </footer>
+<footer class="bg-[#0a0405] py-6 sm:py-8 border-t border-trio-red/20 text-center px-6 flex flex-col items-center">
+    <img src="image-logo.jpg" alt="Logo Le Trio" loading="lazy" decoding="async" class="h-12 sm:h-14 object-contain mb-3 drop-shadow-[0_0_15px_rgba(212,175,55,0.2)]" onerror="this.src='https://via.placeholder.com/200x80.png?text=LE+TRIO'">
+    <p class="text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-[0.2em] leading-normal max-w-md">
+        Gastronomie • Karaoké • Billard • Salons VIP<br>
+        17A Av. Tangu, Ngaliema, Kinshasa<br>
+        <span class="text-trio-gold mt-1 inline-block">© 2026 Restaurant LE TRIO.</span> Tous droits réservés.
+    </p>
+</footer>
 
     <!-- COLONNE RÉSEAUX SOCIAUX & WHATSAPP (COULEURS OFFICIELLES & ANIMÉS) -->
     <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 flex flex-col items-center gap-3 z-50">
         <!-- Facebook (Bleu) -->
         <a href="https://www.facebook.com/profile.php?id=61589433577305" target="_blank" class="bg-[#1877F2] text-white p-2.5 sm:p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center animate-float">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sm:w-5 sm:h-5"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
         </a>
         <!-- Instagram -->
         <a href="https://www.instagram.com/letrio.restaurant?igsi=MXUycGlyMmk2OWltdA==" target="_blank" title="Notre Instagram" class="bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white p-2.5 sm:p-3 rounded-full shadow-[0_4px_15px_rgba(220,39,67,0.4)] hover:scale-110 hover:shadow-[0_0_20px_rgba(220,39,67,0.8)] transition-all duration-300 flex items-center justify-center animate-float" style="animation-delay: 0.2s;">
@@ -324,33 +342,47 @@
         </a>
         <!-- TikTok (Noir/Blanc) -->
         <a href="https://www.tiktok.com/@restaurant.le.tri?_r=1&_t=ZS-99SR0OL8cSb" target="_blank" class="bg-black text-white border border-white/20 p-2.5 sm:p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center animate-float" style="animation-delay: 0.4s;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sm:w-5 sm:h-5"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg>
         </a>
         <!-- WhatsApp (Vert, plus grand) -->
-        <a href="https://wa.me/243854115659" target="_blank" class="bg-[#25D366] text-white p-3.5 sm:p-4 rounded-full shadow-[0_0_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform flex items-center justify-center mt-1 animate-float" style="animation-delay: 0.6s;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+        <a href="https://wa.me/243808806100" target="_blank" class="bg-[#25D366] text-white p-3.5 sm:p-4 rounded-full shadow-[0_0_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform flex items-center justify-center mt-1 animate-float" style="animation-delay: 0.6s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" class="sm:w-7 sm:h-7"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
         </a>
     </div>
 
+    <!-- SCRIPTS -->
     <script>
         function reserverWhatsApp() {
             const nom = document.getElementById('res-nom').value || 'Un client';
+            const date = document.getElementById('res-date') ? document.getElementById('res-date').value : "Date non précisée";
             const type = document.getElementById('res-type').value;
-            const message = `Bonjour Le Trio ! Je suis ${nom}. Objet : ${type}. Pouvez-vous me renseigner ?`;
-            window.open(`https://wa.me/243854115659?text=${encodeURIComponent(message)}`, '_blank');
+            const message = `Bonjour Le Trio ! Je suis ${nom}. Je souhaite réserver : *${type}* pour le *${date}*. Pouvez-vous me confirmer la disponibilité ?`;
+            window.open(`https://wa.me/0808806100?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => { document.body.classList.add('loaded'); }, 1500);
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+            }, 800);
+        });
+        
+        setTimeout(() => {
+            if(!document.body.classList.contains('loaded')){
+                document.body.classList.add('loaded');
+                setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 800);
+            }
+        }, 8000);
 
+        document.addEventListener("DOMContentLoaded", () => {
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 20) {
-                    navbar.classList.add('bg-[#0A0A0A]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3');
-                    navbar.classList.remove('bg-transparent', 'border-transparent', 'py-4', 'sm:py-6');
+                    navbar.classList.add('bg-[#070707]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-4');
+                    navbar.classList.remove('bg-transparent', 'border-transparent', 'py-6');
                 } else {
-                    navbar.classList.add('bg-transparent', 'border-transparent', 'py-4', 'sm:py-6');
-                    navbar.classList.remove('bg-[#0A0A0A]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3');
+                    navbar.classList.add('bg-transparent', 'border-transparent', 'py-6');
+                    navbar.classList.remove('bg-[#070707]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-4');
                 }
             });
 

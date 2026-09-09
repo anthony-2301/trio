@@ -5,165 +5,335 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>La Carte Complète | Restaurant LE TRIO</title>
     
+    <!-- Pré-connexion pour charger les polices et icônes BEAUCOUP plus vite -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { "trio-red": "#A31621", "trio-gold": "#D4AF37", "trio-bg": "#0A0A0A", "trio-card": "#141414" },
-                    fontFamily: { sans: ["Montserrat", "sans-serif"], serif: ["Playfair Display", "serif"] }
+                    colors: {
+                        "trio-red": "#A31621",
+                        "trio-gold": "#D4AF37",
+                        "trio-bg": "#070707",
+                        "trio-card": "#121212",
+                    },
+                    fontFamily: { sans: ["Montserrat", "sans-serif"], serif: ["Playfair Display", "serif"] },
+                    animation: { 'float': 'float 3s ease-in-out infinite' },
+                    keyframes: { float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-6px)' } } }
                 }
             }
         }
     </script>
 
     <style>
-        body { background-color: #0A0A0A; color: #F9F6F0; }
-        .menu-leader { flex-grow: 1; border-bottom: 1px dotted rgba(212, 175, 55, 0.3); margin: 0 12px; position: relative; top: -6px; }
+        body { background-color: #070707; color: #F9F6F0; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #070707; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; }
+
+        /* Lignes de prix façon menu gastronomique */
+        .menu-leader { flex-grow: 1; border-bottom: 1px dotted rgba(212, 175, 55, 0.4); margin: 0 12px; position: relative; top: -6px; }
+        
+        /* Overlay Héro Menu */
+        .hero-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #070707 0%, rgba(7,7,7,0.5) 50%, rgba(7,7,7,0.8) 100%); }
+        
+        /* === PRELOADER INTELLIGENT === */
+        #preloader { position: fixed; inset: 0; background: #070707; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease-out; }
+        .loaded #preloader { opacity: 0; pointer-events: none; }
+        .logo-pulse { animation: pulseLogo 2s infinite; }
+        @keyframes pulseLogo { 0%, 100% { transform: scale(0.95); filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.7)); } }
+        
+        /* Jauge de progression qui s'adapte au chargement réel */
+        .loading-bar-container { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 30px; overflow: hidden; border-radius: 2px; }
+        .loading-bar { height: 100%; background: #D4AF37; width: 0%; animation: fakeProgress 10s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
+        .loaded .loading-bar { animation: finishProgress 0.5s ease-out forwards; }
+        @keyframes fakeProgress { 0% { width: 0%; } 100% { width: 90%; } }
+        @keyframes finishProgress { 0% { width: 90%; } 100% { width: 100%; } }
+
+        /* Animations d'apparition au scroll */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-trio-gold selection:text-black">
 
-    <!-- NAVBAR SIMPLE -->
-    <nav class="w-full bg-[#0A0A0A] border-b border-white/5 py-4 px-6 z-50 sticky top-0">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-trio-gold transition-colors text-xs font-bold uppercase tracking-widest">
-                <span class="material-symbols-outlined">arrow_back</span> Retour
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-trio-gold/30 flex items-center justify-center logo-pulse bg-black/50 backdrop-blur-md">
+            <span class="font-serif text-lg sm:text-2xl font-bold text-trio-gold tracking-[0.2em] uppercase text-center ml-1">LE TRIO</span>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- NAVBAR SIMPLE & ELEGANTE -->
+    <nav class="w-full bg-[#070707]/95 backdrop-blur-md border-b border-white/5 py-4 px-6 z-50 fixed top-0">
+        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-trio-gold transition-colors text-[10px] font-bold uppercase tracking-[0.2em]">
+                <span class="material-symbols-outlined text-lg">arrow_back</span> <span class="hidden sm:inline">Retour à l'accueil</span>
             </a>
-            <img src="image-logo.jpg" alt="Logo Le Trio" class="h-8 object-contain" onerror="this.style.display='none'">
-            <div class="w-20"></div> <!-- Spacer -->
+            
+            <a href="index.html" class="flex items-center justify-center">
+                <!-- Remplacer par l'image du logo -->
+                <img src="image-logo.jpg" alt="Logo Le Trio" class="h-8 sm:h-10 object-contain hover:scale-105 transition-transform" onerror="this.style.display='none'">
+                <!-- Texte de secours si pas d'image -->
+                <span class="font-serif text-xl tracking-[0.2em] text-trio-gold uppercase hidden" onerror="this.style.display='block'">Le Trio</span>
+            </a>
+
+            <a href="#reservation" class="text-trio-gold border border-trio-gold/50 px-4 sm:px-6 py-2 text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm hover:bg-trio-gold hover:text-black transition-all">
+                Réserver
+            </a>
         </div>
     </nav>
 
-    <!-- ENTÊTE -->
-    <header class="py-12 text-center bg-trio-card border-b border-white/5">
-        <h1 class="font-serif text-3xl sm:text-5xl text-trio-gold mb-4">La Carte du Restaurant</h1>
-        <p class="text-xs text-gray-400 uppercase tracking-[0.2em]">Découvrez toutes nos saveurs</p>
+    <!-- HERO SECTION DU MENU -->
+    <header class="relative h-[50vh] min-h-[400px] w-full flex items-center justify-center pt-16">
+        <div class="absolute inset-0 hero-overlay z-0">
+            <!-- Pas de "loading=lazy" ici car c'est la 1ère image visible -->
+            <img class="w-full h-full object-cover opacity-50 mix-blend-luminosity" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Cuisine Le Trio">
+        </div>
+        <div class="relative z-10 text-center reveal">
+            <span class="text-trio-gold text-[9px] tracking-[0.3em] uppercase mb-4 block font-medium">Gastronomie & Saveurs</span>
+            <h1 class="font-serif text-5xl sm:text-7xl text-white mb-4 drop-shadow-lg">Le Menu</h1>
+            <div class="w-16 h-[1px] bg-trio-gold mx-auto"></div>
+        </div>
     </header>
 
     <!-- CONTENU DU MENU -->
-    <div class="max-w-5xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div class="max-w-[1200px] mx-auto px-6 py-20 space-y-24 sm:space-y-32">
         
-        <!-- COLONNE 1 -->
-        <div class="space-y-12">
-            
-            <!-- PETIT DEJEUNER -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">I. Petit Déjeuner</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Déjeuner complet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Déjeuner simplet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">15.000 FC</span></li>
-                </ul>
+        <!-- SECTION 1 : PETIT DÉJEUNER & OEUFS -->
+        <section class="flex flex-col md:flex-row items-center gap-10 lg:gap-16 reveal">
+            <div class="w-full md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group">
+                <!-- AJOUT DU LOADING="LAZY" POUR ACCÉLÉRER LE SITE -->
+                <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Petit-déjeuner" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
-
-            <!-- CUISSON DES OEUFS -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">II. Cuisson des Oeufs</h2>
-                <p class="text-xs text-gray-400 mb-4 px-2 italic">Sur demande : Nature, Sardine, Jambon, Fromage, Baveuse, Sur le plat.</p>
+            <div class="w-full md:w-1/2">
+                <h2 class="font-serif text-3xl sm:text-4xl text-trio-gold mb-8">Matinées Douces</h2>
+                
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">I. Petit Déjeuner</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Déjeuner complet</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                            <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Déjeuner simplet</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">15.000 FC</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">II. Cuisson des Oeufs</h3>
+                        <p class="text-xs text-gray-400 font-light mb-4 italic">Sur demande : Nature, Sardine, Jambon, Fromage, Baveuse, Sur le plat.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <!-- SALADES -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">III. Salades</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade mixte</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade d'avocat</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Oeuf à la ruse</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Tomate farcis</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Salade macédoine</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Oeuf MIMOZA</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">15.000 FC</span></li>
-                </ul>
+        <!-- SECTION 2 : SALADES (Inversé) -->
+        <section class="flex flex-col md:flex-row-reverse items-center gap-10 lg:gap-16 reveal">
+            <div class="w-full md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Salades" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
-
-            <!-- NOS PLATS -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">IV. Nos Plats</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Filet de capitaine</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">65.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Assiette de dorade</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">32.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Sol menière</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">58.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Côte de porc grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Côte à l'os grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">55.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Steack grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Crevette à l'ail</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">50.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet basquèse</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet KFC</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet pané</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">30.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet sauce champignons</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Brochette de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Blanquette poisson</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">75.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poisson salé 3 légumes</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Ngolo moseka trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">52.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Mutu ya ntaba</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
-                </ul>
+            <div class="w-full md:w-1/2">
+                <h2 class="font-serif text-3xl sm:text-4xl text-trio-gold mb-8">Fraîcheur & Entrées</h2>
+                
+                <div>
+                    <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">III. Salades</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Salade mixte</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Salade d'avocat</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">20.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Oeuf à la ruse</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Tomate farcis</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">20.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Salade le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Salade macédoine</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">40.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Oeuf MIMOZA</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">15.000 FC</span></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- COLONNE 2 -->
-        <div class="space-y-12">
-            
-            <!-- SNACKS & PIZZAS -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">VII. Snacks & Pizzas</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Hamburger</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Samoussa (5 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Boulette viande (6 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Ailes de poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">42.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Takos</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Chawarma viande</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">13.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Chawarma poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">11.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Assiette mixte</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">80.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza marguerita</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">20.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza jardin</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">50.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Pizza le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">57.000 FC</span></li>
-                </ul>
+        <!-- SECTION 3 : NOS PLATS -->
+        <section class="flex flex-col md:flex-row items-center gap-10 lg:gap-16 reveal">
+            <div class="w-full md:w-1/2 aspect-[3/4] sm:aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group">
+                <img src="https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Plats" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
-
-            <!-- BARBECUE & PAPILLOTTES -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">VIII & IX. Grillades</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet braisé</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">40.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Poulet mayo</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">45.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Ntaba (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">65.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Ngulu (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">60.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Dindon (2 boules)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm mt-6 pt-4 border-t border-white/10"><span class="text-gray-200">Papillottes (Mopongo, Mboto...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">52.000 FC</span></li>
-                </ul>
+            <div class="w-full md:w-1/2">
+                <h2 class="font-serif text-3xl sm:text-4xl text-trio-gold mb-8">Les Signatures</h2>
+                
+                <div>
+                    <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">IV. Nos Plats</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Filet de capitaine</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">65.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Assiette de dorade</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">32.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Sol menière</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">58.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Côte de porc grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">40.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Côte à l'os grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">55.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Steack grillé</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">45.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Crevette à l'ail</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">50.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet basquèse</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">40.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet KFC</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">35.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet pané</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">30.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet sauce champignons</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">45.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Brochette de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">42.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Blanquette poisson</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">75.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poisson salé 3 légumes</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">35.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Ngolo moseka trio</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">52.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Mutu ya ntaba</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">42.000 FC</span></li>
+                    </ul>
+                </div>
             </div>
+        </section>
 
-            <!-- LÉGUMES & ACCOMPAGNEMENTS -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">Accompagnements</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Légumes (Ndunda, Pondu...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">12.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Portions (Frites, Banane, Riz...)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">12.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Riz simple</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">10.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Chikwangue / Fufu</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">4.000 FC</span></li>
-                </ul>
+        <!-- SECTION 4 : SNACKS & PIZZAS (Inversé) -->
+        <section class="flex flex-col md:flex-row-reverse items-center gap-10 lg:gap-16 reveal">
+            <div class="w-full md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Snacks" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
-
-            <!-- PATES -->
-            <div>
-                <h2 class="bg-trio-card text-trio-gold text-center py-2 font-serif text-xl border border-white/5 mb-6 uppercase tracking-widest">XI. Pâtes</h2>
-                <ul class="space-y-4 px-2">
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Spaguette bolognaise</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">25.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Pâtes carbonara</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">35.000 FC</span></li>
-                    <li class="flex items-end text-sm"><span class="text-gray-200">Spaguette nature</span><span class="menu-leader"></span><span class="text-trio-gold font-bold">30.000 FC</span></li>
-                </ul>
+            <div class="w-full md:w-1/2">
+                <h2 class="font-serif text-3xl sm:text-4xl text-trio-gold mb-8">Plaisirs Gourmands</h2>
+                
+                <div>
+                    <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">VII. Snacks & Pizzas</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Hamburger</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Samoussa (5 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">20.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Boulette viande (6 pcs)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Ailes de poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">42.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Takos</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">20.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Chawarma viande</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">13.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Chawarma poulet</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">11.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200 text-trio-gold">Assiette mixte (Spécial)</span><span class="menu-leader"></span><span class="text-trio-gold font-bold tracking-wide">80.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Pizza marguerita</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">20.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Pizza jardin</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">40.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Pizza de boeuf</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">50.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Pizza le trio</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">57.000 FC</span></li>
+                    </ul>
+                </div>
             </div>
+        </section>
 
-        </div>
+        <!-- SECTION 5 : GRILLADES, PÂTES & ACCOMPAGNEMENTS -->
+        <section class="flex flex-col md:flex-row items-center gap-10 lg:gap-16 reveal">
+            <div class="w-full md:w-1/2 aspect-[3/4] sm:aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group">
+                <img src="https://images.unsplash.com/photo-1544025162-836901980a30?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Barbecue" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
+            </div>
+            <div class="w-full md:w-1/2 space-y-12">
+                
+                <div>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-trio-gold mb-8">Grillades & Pâtes</h2>
+                    <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">VIII & IX. Barbecue & Papillottes</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet braisé</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">40.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Poulet mayo</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">45.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Ntaba (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">65.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Ngulu (1kg)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">60.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm"><span class="text-gray-200">Dindon (2 boules)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">25.000 FC</span></li>
+                        <li class="flex items-end text-xs sm:text-sm mt-4 pt-4 border-t border-white/5"><span class="text-gray-200">Papillottes (Mopongo, Mboto...)</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">52.000 FC</span></li>
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">XI. Pâtes</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Spag. bolognaise</span><span class="menu-leader"></span><span class="text-trio-gold">25.000 FC</span></li>
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Pâtes carbonara</span><span class="menu-leader"></span><span class="text-trio-gold">35.000 FC</span></li>
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Spaguette nature</span><span class="menu-leader"></span><span class="text-trio-gold">30.000 FC</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-[10px] text-gray-500 uppercase tracking-widest mb-4">Accompagnements</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Légumes (Pondu..)</span><span class="menu-leader"></span><span class="text-trio-gold">12.000 FC</span></li>
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Portions (Frites..)</span><span class="menu-leader"></span><span class="text-trio-gold">12.000 FC</span></li>
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Riz simple</span><span class="menu-leader"></span><span class="text-trio-gold">10.000 FC</span></li>
+                            <li class="flex items-end text-xs"><span class="text-gray-200">Fufu / Chikwangue</span><span class="menu-leader"></span><span class="text-trio-gold">4.000 FC</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
-    
-    <footer class="text-center py-8 text-xs text-gray-500 border-t border-white/5 mt-12">
-        © 2024 Restaurant LE TRIO. Tous droits réservés.
+
+    <!-- NOUVELLE SECTION RÉSERVATION -->
+    <section id="reservation" class="py-24 bg-[#121212] border-t border-trio-gold/20 text-center relative overflow-hidden reveal">
+        <div class="absolute inset-0 bg-trio-gold/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div class="max-w-2xl mx-auto px-6 relative z-10">
+            <span class="material-symbols-outlined text-4xl text-trio-gold mb-6 block">restaurant</span>
+            <h2 class="font-serif text-4xl sm:text-5xl text-white mb-6">Convaincu par notre carte ?</h2>
+            <p class="text-gray-400 font-light text-sm sm:text-base leading-relaxed mb-10">
+                L'expérience Trio se vit à table. Réservez votre place dès maintenant pour déguster nos spécialités dans un cadre d'exception.
+            </p>
+            <button onclick="reserverTableMenu()" class="bg-trio-gold text-black font-bold px-10 py-4 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase hover:bg-white hover:scale-105 transition-all duration-300 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                Réserver ma Table
+            </button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#050505] py-12 text-center flex flex-col items-center">
+        <p class="text-[9px] text-gray-500 uppercase tracking-[0.2em] font-light">
+            © 2024 Restaurant LE TRIO. Kinshasa, RDC.<br>Tous droits réservés.
+        </p>
     </footer>
+
+    <!-- COLONNE RÉSEAUX SOCIAUX & WHATSAPP FLOTTANTS -->
+    <div class="fixed bottom-6 right-6 flex flex-col items-center gap-3 sm:gap-4 z-50">
+        <a href="https://www.facebook.com/profile.php?id=61589433577305" target="_blank" class="bg-[#1877F2] text-white p-2.5 sm:p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center animate-float">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sm:w-5 sm:h-5"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/letrio.restaurant?igsi=MXUycGlyMmk2OWltdA==" target="_blank" class="bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white p-2.5 sm:p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center animate-float" style="animation-delay: 0.2s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sm:w-5 sm:h-5"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546-.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@restaurant.le.tri?_r=1&_t=ZS-99SR0OL8cSb" target="_blank" class="bg-[#050505] text-white border border-white/20 p-2.5 sm:p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center animate-float" style="animation-delay: 0.4s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="sm:w-5 sm:h-5"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/></svg>
+        </a>
+        <a href="https://wa.me/243854115659" target="_blank" class="bg-[#25D366] text-white p-3.5 sm:p-4 rounded-full shadow-[0_0_15px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform flex items-center justify-center mt-1 animate-float" style="animation-delay: 0.6s;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="sm:w-7 sm:h-7"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+        </a>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        function reserverTableMenu() {
+            const message = `Bonjour Le Trio ! Je viens de consulter votre carte et j'aimerais réserver une table. Pouvez-vous me donner plus d'informations ?`;
+            window.open(`https://wa.me/243854115659?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // JS pour disparition intelligente du preloader (Seulement quand TOUT est chargé)
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+            }, 800); // Laisse le temps à l'opacité de s'effacer
+        });
+        
+        // Sécurité en cas de connexion très lente
+        setTimeout(() => {
+            if(!document.body.classList.contains('loaded')){
+                document.body.classList.add('loaded');
+                setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 800);
+            }
+        }, 8000);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        });
+    </script>
 </body>
 </html>
