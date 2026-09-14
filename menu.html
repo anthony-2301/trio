@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>La Carte Complète | Restaurant LE TRIO</title>
     
-    <!-- Pré-connexion pour charger les polices et icônes BEAUCOUP plus vite -->
+    <!-- Pré-connexion pour charger les polices et icônes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
@@ -37,26 +37,20 @@
         ::-webkit-scrollbar-track { background: #070707; }
         ::-webkit-scrollbar-thumb { background: #D4AF37; }
 
-        /* Lignes de prix façon menu gastronomique */
         .menu-leader { flex-grow: 1; border-bottom: 1px dotted rgba(212, 175, 55, 0.4); margin: 0 12px; position: relative; top: -6px; }
-        
-        /* Overlay Héro Menu */
         .hero-overlay::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #070707 0%, rgba(7,7,7,0.5) 50%, rgba(7,7,7,0.8) 100%); }
         
-        /* === PRELOADER INTELLIGENT === */
         #preloader { position: fixed; inset: 0; background: #070707; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease-out; }
         .loaded #preloader { opacity: 0; pointer-events: none; }
         .logo-pulse { animation: pulseLogo 2s infinite; }
         @keyframes pulseLogo { 0%, 100% { transform: scale(0.95); filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.7)); } }
         
-        /* Jauge de progression qui s'adapte au chargement réel */
         .loading-bar-container { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 30px; overflow: hidden; border-radius: 2px; }
         .loading-bar { height: 100%; background: #D4AF37; width: 0%; animation: fakeProgress 10s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; }
         .loaded .loading-bar { animation: finishProgress 0.5s ease-out forwards; }
         @keyframes fakeProgress { 0% { width: 0%; } 100% { width: 90%; } }
         @keyframes finishProgress { 0% { width: 90%; } 100% { width: 100%; } }
 
-        /* Animations d'apparition au scroll */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
@@ -73,7 +67,7 @@
         </div>
     </div>
 
-    <!-- NAVBAR SIMPLE & ELEGANTE -->
+    <!-- NAVBAR -->
     <nav class="w-full bg-[#070707]/95 backdrop-blur-md border-b border-white/5 py-4 px-6 z-50 fixed top-0">
         <div class="max-w-[1400px] mx-auto flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-trio-gold transition-colors text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -81,10 +75,7 @@
             </a>
             
             <a href="index.html" class="flex items-center justify-center">
-                <!-- Remplacer par l'image du logo -->
                 <img src="image-logo.jpg" alt="Logo Le Trio" class="h-8 sm:h-10 object-contain hover:scale-105 transition-transform" onerror="this.style.display='none'">
-                <!-- Texte de secours si pas d'image -->
-                <span class="font-serif text-xl tracking-[0.2em] text-trio-gold uppercase hidden" onerror="this.style.display='block'">Le Trio</span>
             </a>
 
             <a href="#reservation" class="text-trio-gold border border-trio-gold/50 px-4 sm:px-6 py-2 text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm hover:bg-trio-gold hover:text-black transition-all">
@@ -93,10 +84,9 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION DU MENU -->
+    <!-- HERO MENU -->
     <header class="relative h-[50vh] min-h-[400px] w-full flex items-center justify-center pt-16">
         <div class="absolute inset-0 hero-overlay z-0">
-            <!-- Pas de "loading=lazy" ici car c'est la 1ère image visible -->
             <img class="w-full h-full object-cover opacity-50 mix-blend-luminosity" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Cuisine Le Trio">
         </div>
         <div class="relative z-10 text-center reveal">
@@ -109,14 +99,13 @@
     <!-- CONTENU DU MENU -->
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 py-20 space-y-24 sm:space-y-32">
         
-        <!-- SECTION 1 : PETIT DÉJEUNER & OEUFS -->
+        <!-- SECTION 1 -->
         <section class="flex flex-row items-center gap-4 sm:gap-10 lg:gap-16 reveal">
             <div class="w-2/5 md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group shrink-0">
                 <img src="image/dj.jpg" alt="Petit-déjeuner" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
             <div class="w-3/5 md:w-1/2">
                 <h2 class="font-serif text-xl sm:text-4xl text-trio-gold mb-4 sm:mb-8">Matinées Douces</h2>
-                
                 <div class="space-y-6 sm:space-y-8">
                     <div>
                         <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">I. Petit Déjeuner</h3>
@@ -125,7 +114,6 @@
                             <li class="flex items-end text-[11px] sm:text-sm"><span class="text-gray-200">Déjeuner simplet</span><span class="menu-leader"></span><span class="text-trio-gold font-medium tracking-wide">15.000 FC</span></li>
                         </ul>
                     </div>
-                    
                     <div>
                         <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">II. Cuisson des Oeufs</h3>
                         <p class="text-[10px] sm:text-xs text-gray-400 font-light mb-4 italic">Sur demande : Nature, Sardine, Jambon, Fromage, Baveuse, Sur le plat.</p>
@@ -134,14 +122,13 @@
             </div>
         </section>
 
-        <!-- SECTION 2 : SALADES (Inversé sur desktop, côte à côte partout) -->
+        <!-- SECTION 2 -->
         <section class="flex flex-row-reverse items-center gap-4 sm:gap-10 lg:gap-16 reveal">
             <div class="w-2/5 md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group shrink-0">
                 <img src="image/sl.jpg" alt="Salades" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
             <div class="w-3/5 md:w-1/2">
                 <h2 class="font-serif text-xl sm:text-4xl text-trio-gold mb-4 sm:mb-8">Fraîcheur & Entrées</h2>
-                
                 <div>
                     <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">III. Salades</h3>
                     <ul class="space-y-3 sm:space-y-4">
@@ -157,14 +144,13 @@
             </div>
         </section>
 
-        <!-- SECTION 3 : NOS PLATS -->
+        <!-- SECTION 3 -->
         <section class="flex flex-row items-center gap-4 sm:gap-10 lg:gap-16 reveal">
             <div class="w-2/5 md:w-1/2 aspect-[3/4] sm:aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group shrink-0">
                 <img src="https://i.pinimg.com/1200x/b6/a7/d8/b6a7d87f70499727b0109b17243cf484.jpg" alt="Plats" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
             <div class="w-3/5 md:w-1/2">
                 <h2 class="font-serif text-xl sm:text-4xl text-trio-gold mb-4 sm:mb-8">Les Signatures</h2>
-                
                 <div>
                     <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">IV. Nos Plats</h3>
                     <ul class="space-y-3 sm:space-y-4">
@@ -189,14 +175,13 @@
             </div>
         </section>
 
-        <!-- SECTION 4 : SNACKS & PIZZAS -->
+        <!-- SECTION 4 -->
         <section class="flex flex-row-reverse items-center gap-4 sm:gap-10 lg:gap-16 reveal">
             <div class="w-2/5 md:w-1/2 aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group shrink-0">
                 <img src="https://i.pinimg.com/736x/30/7b/bd/307bbd28eb47dcfc5be7ea883c2eef09.jpg" alt="Snacks" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
             <div class="w-3/5 md:w-1/2">
                 <h2 class="font-serif text-xl sm:text-4xl text-trio-gold mb-4 sm:mb-8">Plaisirs Gourmands</h2>
-                
                 <div>
                     <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">VII. Snacks & Pizzas</h3>
                     <ul class="space-y-3 sm:space-y-4">
@@ -217,13 +202,12 @@
             </div>
         </section>
 
-        <!-- SECTION 5 : GRILLADES, PÂTES & ACCOMPAGNEMENTS -->
+        <!-- SECTION 5 -->
         <section class="flex flex-row items-center gap-4 sm:gap-10 lg:gap-16 reveal">
             <div class="w-2/5 md:w-1/2 aspect-[3/4] sm:aspect-[4/3] rounded-sm overflow-hidden shadow-2xl border border-white/5 relative group shrink-0">
                 <img src="https://i.pinimg.com/736x/a9/b1/7f/a9b17fa434bd530694457ca8d7549bce.jpg" alt="Barbecue" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80">
             </div>
             <div class="w-3/5 md:w-1/2 space-y-8 sm:space-y-12">
-                
                 <div>
                     <h2 class="font-serif text-xl sm:text-4xl text-trio-gold mb-4 sm:mb-8">Grillades & Pâtes</h2>
                     <h3 class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">VIII & IX. Barbecue & Papillottes</h3>
@@ -261,7 +245,7 @@
 
     </div>
 
-    <!-- NOUVELLE SECTION RÉSERVATION -->
+    <!-- RÉSERVATION -->
     <section id="reservation" class="py-24 bg-[#121212] border-t border-trio-gold/20 text-center relative overflow-hidden reveal">
         <div class="absolute inset-0 bg-trio-gold/5 blur-[100px] rounded-full pointer-events-none"></div>
         <div class="max-w-2xl mx-auto px-6 relative z-10">
@@ -279,7 +263,7 @@
     <!-- FOOTER -->
     <footer class="bg-[#050505] py-12 text-center flex flex-col items-center">
         <p class="text-[9px] text-gray-500 uppercase tracking-[0.2em] font-light">
-            © 2024 Restaurant LE TRIO. Kinshasa, RDC.<br>Tous droits réservés.
+            © 2026 Restaurant LE TRIO. Kinshasa, RDC.<br>Tous droits réservés.
         </p>
     </footer>
 
@@ -306,15 +290,13 @@
             window.open(`https://wa.me/243854115659?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // JS pour disparition intelligente du preloader (Seulement quand TOUT est chargé)
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
             setTimeout(() => {
                 document.getElementById('preloader').style.display = 'none';
-            }, 800); // Laisse le temps à l'opacité de s'effacer
+            }, 800);
         });
-        
-        // Sécurité en cas de connexion très lente
+
         setTimeout(() => {
             if(!document.body.classList.contains('loaded')){
                 document.body.classList.add('loaded');
