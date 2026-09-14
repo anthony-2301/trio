@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
+# Autoriser explicitement les principaux robots d'IA
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://www.trio-restaurant.com/sitemap.xml

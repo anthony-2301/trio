@@ -17,23 +17,50 @@
 
     <!-- Données structurées Schema.org (Local Business / Restaurant) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Le Trio",
+  "image": "https://www.trio-restaurant.com/assets/img/apercu.jpg",
+  "url": "https://www.trio-restaurant.com/",
+  "telephone": "+243808806100",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "17A, avenue Tangu, Q/Basoko, Réf/ GB Mango",
+    "addressLocality": "Ngaliema, Kinshasa",
+    "addressCountry": "CD"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-4.3214", 
+    "longitude": "15.2638"
+  },
+  "servesCuisine": ["Congolaise", "Grillades", "Internationale"],
+  "amenityFeature": [
     {
-      "@context": "https://schema.org",
-      "@type": "Restaurant",
-      "name": "Le Trio",
-      "image": "https://www.trio-restaurant.com/image/logo.jpeg",
-      "@id": "https://www.trio-restaurant.com/",
-      "url": "https://www.trio-restaurant.com/",
-      "telephone": "+243854115659",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Ngaliema, Kinshasa",
-        "addressCountry": "CD"
-      },
-      "servesCuisine": "Grillades, Petit-déjeuner, Local",
-        "priceRange": "$$"
+      "@type": "LocationFeatureSpecification",
+      "name": "Karaoké Live",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Billard",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Espace Chicha",
+      "value": true
+    },
+    {
+      "@type": "LocationFeatureSpecification",
+      "name": "Salon VIP",
+      "value": true
     }
-    </script>
+  ]
+}
+</script>
     <!-- Pré-connexion pour charger les polices et icônes BEAUCOUP plus vite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
